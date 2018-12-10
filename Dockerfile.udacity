@@ -55,10 +55,13 @@ ENV PYTHONUNBUFFERED 1
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONPATH /app
 
+COPY docker/run_gunicorn.sh /app
+RUN chmod +x /app/run_gunicorn.sh
+
 WORKDIR /app
 
 # Call collectstatic (customize the following line with the minimal environment variables needed for manage.py to run):
 RUN DATABASE_URL=none SECRET_KEY=none SITE_URL=none /env/bin/python manage.py collectstatic --noinput
 
 # Start the django app
-CMD ["/env/bin/gunicorn", "--bind", "0.0.0.0:8000", "--workers", "4", "--timeout", "30", "pontoon.wsgi:application", "--log-file", "-"]
+CMD ["/app/run_gunicorn.sh"]
