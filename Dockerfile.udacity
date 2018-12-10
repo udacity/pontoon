@@ -28,11 +28,13 @@ COPY docker/rootfs /
 # Create the folder for frontend assets
 RUN mkdir -p /app/assets
 
-COPY . /app
+COPY requirements.txt /app
 
 # Install python deps
 RUN virtualenv /env \
   && /env/bin/pip install -U 'pip>=8' -r /app/requirements.txt
+
+COPY . /app
 
 RUN cd /app && npm install
 RUN cd /app/frontend && yarn install
