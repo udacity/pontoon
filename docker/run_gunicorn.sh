@@ -10,6 +10,9 @@ chmod 400 /root/.ssh/id_rsa
 
 ssh-keyscan -H github.com >> /root/.ssh/known_hosts
 
+# Sync the projects else the auto-sync doesn't find them
+/env/bin/python manage.py sync_projects
+
 BIND="0.0.0.0:8000"
 NWORKERS=4
 TIMEOUT=30
